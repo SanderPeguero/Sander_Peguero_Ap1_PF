@@ -138,29 +138,52 @@
 
     public DateTime CriterioFecha = DateTime.Now;
 
-
-
     void BuscarId(){
 
-        clientes = ClientesBLL.GetList(x => x.ClienteId == CriterioId);
+        if(CriterioId == 0){
+
+            clientes = ClientesBLL.GetList();
+
+        }else{
+
+            clientes = ClientesBLL.GetList(x => x.ClienteId == CriterioId);
+            
+        }
 
     }
 
     void BuscarNombre(){
 
-        clientes = ClientesBLL.GetList(x => x.Nombre == CriterioNombre);
+        if(CriterioNombre == null){
+            
+            clientes = ClientesBLL.GetList();
+
+        }else{
+
+            clientes = ClientesBLL.GetList(x => x.Nombre.ToLower().Contains(CriterioNombre.ToLower()));
+
+        }
 
     }
 
     void BuscarApellido(){
 
-        clientes = ClientesBLL.GetList(x => x.Apellido.ToLower().Contains(CriterioApellido.ToLower()));
+        if(CriterioApellido == null){
+            
+            clientes = ClientesBLL.GetList();
+
+        }else{
+
+            clientes = ClientesBLL.GetList(x => x.Apellido.ToLower().Contains(CriterioApellido.ToLower()));
+
+        }
+
 
     }
 
     void BuscarFecha(){
 
-        clientes = ClientesBLL.GetList(x => x.Fecha == CriterioFecha);
+        clientes = ClientesBLL.GetList(x => x.Fecha > CriterioFecha);
 
     }
     

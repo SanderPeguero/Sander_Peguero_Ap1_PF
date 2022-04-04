@@ -194,9 +194,18 @@
 
     void Buscar(){
         
-        cliente = ClientesBLL.Read(dispositivo.ClienteId);
+        if(DispositivoNo < 1){
 
-        dispositivo = cliente.Dispositivos[DispositivoNo - 1];
+            DispositivoNo = 1;
+            cliente = ClientesBLL.Read(dispositivo.ClienteId);
+            dispositivo = cliente.Dispositivos[DispositivoNo - 1];
+
+        }else{
+            
+            cliente = ClientesBLL.Read(dispositivo.ClienteId);
+            dispositivo = cliente.Dispositivos[DispositivoNo - 1];
+
+        }
 
     }
 

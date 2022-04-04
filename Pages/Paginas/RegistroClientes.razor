@@ -118,7 +118,15 @@
 
     void Guardar(){
 
-        ClientesBLL.Create(cliente);
+        if(ClientesBLL.Read(cliente.ClienteId) == null){
+            
+            ClientesBLL.Create(cliente);
+
+        }else{
+            
+            ClientesBLL.Update(cliente);
+
+        }
 
     }
 
