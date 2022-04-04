@@ -1,0 +1,209 @@
+﻿@page "/RegistroDispositivos"
+
+<EditForm Model="dispositivo" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator/>
+
+    <div class="card align-items-inherit bg-dark mb-5" style="width: 35rem;">
+
+        <div class="card mb-3 bg-secondary">
+
+            <div class="card-header bg-dark">
+                <h3 class="text-white">Registro de Dispositivos</h3>
+            </div>
+
+            <div class="card-body">
+
+                <div class="form-row align-items-center mb-3">
+                    <div class="col">
+                        <div class="form-group">
+                            <div class="input-group">
+
+                                <span class="input-group-text">Dispositivo #</span>
+                                <InputNumber class="form-control me-3 rounded-end" @bind-Value="DispositivoNo"/>
+                                <ValidationMessage For="@(() => dispositivo.DispositivoId)"/>
+                                
+                                 <div class="input-group-append">
+                                    <button type="button" class="btn btn-dark input-group-text" @onclick="Buscar" > 
+                                            <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Cliente</span>
+                        <select class="form-select me-3" aria-label="Default select example" @bind="dispositivo.ClienteId">
+                            <option selected disabled value="">Selecciona...</option>
+                            @foreach(var cliente in ClientesBLL.GetList()){
+
+                                <option value=@cliente.ClienteId> @cliente.Nombre @cliente.Apellido </option>
+
+                            }
+                        </select>
+                        <ValidationMessage For="@(() => dispositivo.Marca)"/>
+
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Marca</span>
+                        <InputText class="form-control" placeholder="Especifique..." @bind-Value="dispositivo.Marca" />
+                        <select class="form-select" aria-label="Default select example" @bind="dispositivo.Marca">
+                            <option selected disabled value="">Selecciona...</option>
+                            <option value="Apple">Apple</option>
+                            <option value="Samsung">Samsung</option>
+                            <option value="One Plus">One Plus</option>
+                            <option value="Xiaomi">Xiaomi</option>
+                            <option value="Huawei">Huawei</option>
+                            <option value="Nokia">Nokia</option>
+                            <option value="Sony">Sony</option>
+                            <option value="Alcatel">Alcatel</option>
+                        </select>
+                        <ValidationMessage For="@(() => dispositivo.Marca)"/>
+
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Sistema</span>
+                        <select class="form-select" aria-label="Default select example" @bind="dispositivo.SO">
+                            <option selected disabled value="">Selecciona...</option>
+                            <option value="iOS">iOS</option>
+                            <option value="Android">Android</option>
+                            <option value="Windows Phone">Windows Phone</option>
+                            <option value="OxigenOS">OxigenOS</option>
+                        </select>
+                        <ValidationMessage For="@(() => dispositivo.Marca)"/>
+
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Modelo</span>
+                        <InputText class="form-control" @bind-Value="dispositivo.Modelo" />
+                        <ValidationMessage For="@(() => dispositivo.Modelo)"/>
+
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">IMEI</span>
+                        <InputText class="form-control" @bind-Value="dispositivo.IMEI"/>
+                        <ValidationMessage For="@(() => dispositivo.IMEI)"/>
+
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Color</span>
+                        <InputText class="form-control" @bind-Value="dispositivo.Color"/>
+                        <ValidationMessage For="@(() => dispositivo.Color)"/>
+
+                    </div>
+                </div>
+                
+                <div class="form-group mb-3">
+    
+                    <div class="bg-secondary align-center form-switch ps-0 ">
+                                    
+                        <label class="custom-control-label text-light" for="customControlAutosizing">Teclado Fisico</label>
+                        <input class="form-check-input color-black" style="margin-left:5%" type="checkbox" role="switch" id="flexSwitchCheckDefault" @bind-value="dispositivo.Teclado">
+        
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+
+
+        <div class="form-group text-center mb-3">
+            <button type="button" class="btn btn-lg btn-outline-primary mx-3" @onclick="Nuevo">
+                Nuevo
+            </button>
+            <button type="button" class="btn btn-lg btn-outline-success mx-3" @onclick="Guardar">
+                Guardar
+            </button>
+            <button type="button" class="btn btn-lg btn-outline-danger mx-3" @onclick="Eliminar">
+                Eliminar
+            </button>
+        </div>
+
+    </div> 
+    
+</EditForm>
+
+
+@code {
+
+    //Propiedades
+    Dispositivo dispositivo = new Dispositivo();
+
+    //Utilidades
+    Cliente cliente = new Cliente();
+
+    List<Dispositivo> dispositivos = new List<Dispositivo>();
+
+    int DispositivoNo;
+
+
+    //Metodos Dispositivos
+    void Nuevo(){
+
+        dispositivo = new Dispositivo();
+
+    }
+
+    void Guardar(){
+
+        cliente = ClientesBLL.Read(dispositivo.ClienteId);
+
+        cliente.Dispositivos.Add(dispositivo);
+
+        ClientesBLL.Update(cliente);
+
+    }
+
+    void Eliminar(){
+        
+        ClientesBLL.Delete(cliente);
+
+        cliente.Dispositivos.Remove(dispositivo);
+
+        ClientesBLL.Create(cliente);
+
+    }
+
+    //Metodos Utilidad
+
+    void Buscar(){
+        
+        cliente = ClientesBLL.Read(dispositivo.ClienteId);
+
+        dispositivo = cliente.Dispositivos[DispositivoNo - 1];
+
+    }
+
+    void CargarLista(){
+
+        dispositivos = ClientesBLL.Read(dispositivo.ClienteId).Dispositivos;
+
+    }
+
+}

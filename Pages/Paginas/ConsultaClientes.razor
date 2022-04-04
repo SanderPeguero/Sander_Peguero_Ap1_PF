@@ -1,0 +1,167 @@
+﻿@page "/ConsultaClientes"
+
+<EditForm Model="clientes">
+    <DataAnnotationsValidator/>
+
+    <div class="card align-items-inherit bg-dark mb-5" style="width: 40rem;">
+
+        <div class="card mb-3 bg-secondary">
+
+            <div class="card-header bg-dark">
+                <h3 class="text-white">Consulta de Clientes</h3>
+            </div>
+
+            <div class="card-body">
+            
+                <form>
+                    <div class="input-group d-flex align-items-end">
+    
+                        <select class="form-select" aria-label="Default select example" @bind="Filtro">
+                            <option selected disabled value="">Selecciona...</option>
+                            <option value="1">Id</option>
+                            <option value="2">Nombre</option>
+                            <option value="3">Apellido</option>
+                            <option value="4">Fecha</option>
+                        </select>
+                        
+
+                        @if (Filtro == "1")
+                        {
+                            <div class = "flex-fill mx-2">
+                                <InputNumber class="form-control" @bind-Value=CriterioId/>
+                            </div>
+
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-dark input-group-text" @onclick=BuscarId> 
+                                    <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            
+                        }else if(Filtro == "2"){
+
+                            <div class = "flex-fill mx-2">
+                                <InputText class="form-control" @bind-Value=CriterioNombre/>
+                            </div>
+
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-dark input-group-text" @onclick=BuscarNombre> 
+                                    <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                                </button>
+                            </div>
+
+                        }else if(Filtro == "3"){
+
+                            <div class = "flex-fill mx-2">
+                                <InputText class="form-control" @bind-Value=CriterioApellido/>
+                            </div>
+
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-dark input-group-text" @onclick=BuscarApellido> 
+                                    <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                                </button>
+                            </div>
+
+                        }else if(Filtro == "4"){
+                            
+                            <div class = "flex-fill mx-2">
+                                <InputDate class="form-control" @bind-Value=CriterioFecha/>
+                            </div>
+
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-dark input-group-text" @onclick=BuscarFecha> 
+                                    <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                                </button>
+                            </div>  
+
+                        }
+
+
+                        
+                        
+                    </div>
+                </form>
+
+            </div>
+
+            <table class="table table-light">
+                <thead class="thead">
+                    <tr class="table m-3">
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Cédula</th>
+                        <th>Teléfono</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cliente in clientes)
+                    {
+                        <tr>
+                            <td>@cliente.ClienteId</td>
+                            <td>@cliente.Nombre</td>
+                            <td>@cliente.Apellido</td>
+                            <td>@cliente.Cedula</td>
+                            <td>@cliente.Telefono</td>
+                            <td>@cliente.Fecha</td>
+
+                            <td>
+                                @* <span class="btn btn-sm btn-secondary oi oi-ban" href="#">
+                                    Remover
+                                </span> *@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            
+        </div>
+
+    </div> 
+    
+</EditForm>
+
+
+@code {
+
+    List<Cliente> clientes = new List<Cliente>();
+
+    public int ClienteId;
+
+    public string Filtro;
+
+    public int CriterioId;
+
+    public string CriterioNombre;
+
+    public string CriterioApellido;
+
+    public DateTime CriterioFecha = DateTime.Now;
+
+
+
+    void BuscarId(){
+
+        clientes = ClientesBLL.GetList(x => x.ClienteId == CriterioId);
+
+    }
+
+    void BuscarNombre(){
+
+        clientes = ClientesBLL.GetList(x => x.Nombre == CriterioNombre);
+
+    }
+
+    void BuscarApellido(){
+
+        clientes = ClientesBLL.GetList(x => x.Apellido.ToLower().Contains(CriterioApellido.ToLower()));
+
+    }
+
+    void BuscarFecha(){
+
+        clientes = ClientesBLL.GetList(x => x.Fecha == CriterioFecha);
+
+    }
+    
+}

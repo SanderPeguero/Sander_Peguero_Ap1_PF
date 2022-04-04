@@ -1,0 +1,217 @@
+﻿@page "/ConsultaDispositivos"
+
+<EditForm Model="dispositivos">
+    <DataAnnotationsValidator/>
+
+    <div class="card align-items-inherit bg-dark mb-5" style="width: 40rem;">
+
+        <div class="card mb-3 bg-secondary">
+
+            <div class="card-header bg-dark">
+                <h3 class="text-white">Consulta de Dispositivos</h3>
+            </div>
+
+            <div class="card-body">
+            
+                <form>
+                    <div class = "input-group d-flex align-items-end mb-3"> 
+
+                        <span class="input-group-text">Cliente</span>
+                        <select class="form-select me-3" aria-label="Default select example" @bind="ClienteId">
+                            <option selected disabled value="">Selecciona...</option>
+                            @foreach(var cliente in ClientesBLL.GetList()){
+
+                                <option value=@cliente.ClienteId> @cliente.Nombre @cliente.Apellido </option>
+                            }
+                        </select>
+
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-dark input-group-text" @onclick=BuscarCliente > 
+                                <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    @if(cliente.ClienteId > 0){
+
+                        <div class="input-group d-flex align-items-end">
+
+        
+                            <select class="form-select" aria-label="Default select example" @bind="Filtro">
+                                <option selected disabled value="">Selecciona...</option>
+                                <option value="1">Id</option>
+                                <option value="2">Marca</option>
+                                <option value="3">Modelo</option>
+                                <option value="4">Teclado</option>
+                            </select>
+                            
+
+                            @if (Filtro == "1")
+                            {
+                                 <div class = "flex-fill mx-2">
+                                    <InputNumber class="form-control" @bind-Value=CriterioId/>
+                                </div>
+
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-dark input-group-text" @onclick=BuscarId> 
+                                        <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            
+                            }else if(Filtro == "4"){
+                                
+                                <div class = "flex-fill mx-2">
+                                    <div class="input-group-text align-center form-check form-switch mb-0" style="height: 38px;">
+                                        
+                                        <input class="form-check-input" style="margin-left:45%" type="checkbox" role="switch" id="flexSwitchCheckDefault" @bind-value="CriterioTeclado">
+                        
+                                    </div>
+                                </div>
+
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-dark input-group-text" @onclick=BuscarTeclado> 
+                                        <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+
+                            }else{
+
+                                <div class = "flex-fill mx-2">
+                                    
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-dark input-group-text" @onclick=Buscar> 
+                                            <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            }
+
+
+                            
+                        </div>
+
+                    }
+
+                </form>
+
+            </div>
+
+            <table class="table table-light">
+                <thead class="thead">
+                    <tr class="table m-3">
+                        <th>Id</th>
+                        <th>Marca</th>
+                        <th>Modelo</th>
+                        <th>IMEI</th>
+                        <th>Color</th>
+                        <th>Teclado Físico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var dispositivo in dispositivos)
+                    {
+                        <tr>
+                            <td>@dispositivo.DispositivoId</td>
+                            <td>@dispositivo.Marca</td>
+                            <td>@dispositivo.Modelo</td>
+                            <td>@dispositivo.IMEI</td>
+                            <td>@dispositivo.Color</td>
+                            <td>@dispositivo.Teclado</td>
+
+                            <td>
+                                @* <span class="btn btn-sm btn-secondary oi oi-ban" href="#">
+                                    Remover
+                                </span> *@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            
+        </div>
+
+    </div> 
+    
+</EditForm>
+
+@code {
+
+    List<Dispositivo> dispositivos = new List<Dispositivo>();
+
+    Cliente cliente = new Cliente();
+
+    private string Filtro;
+
+    private int CriterioId;
+
+    private int ClienteId;
+
+    private string CriterioMarca;
+
+    private string CriterioModelo;
+
+    private bool CriterioTeclado;
+
+    void Nuevo(){
+
+        cliente = new Cliente();
+        dispositivos = new List<Dispositivo>();
+    }
+    void Buscar(){
+
+        dispositivos = cliente.Dispositivos;
+
+    }
+
+    void BuscarCliente(){
+
+        Nuevo();
+        cliente = ClientesBLL.Read(ClienteId);
+    }
+
+    void BuscarId(){
+
+        if(CriterioId > 1){
+
+            Buscar();
+            
+        }else{
+
+            dispositivos = cliente.Dispositivos.Where(x => x.DispositivoId == CriterioId).ToList();
+
+        }
+
+    }
+
+    void BuscarMarca(){
+
+        if(CriterioMarca == null){
+            
+            Buscar();
+
+        }else{
+
+            cliente = ClientesBLL.Read(ClienteId);
+
+        }
+
+    }
+
+    void BuscarModelo(){
+
+        cliente = ClientesBLL.Read(ClienteId);
+
+    }
+
+    void BuscarTeclado(){
+
+        dispositivos = cliente.Dispositivos.Where(x => x.Teclado == CriterioTeclado).ToList();
+
+    }
+
+
+    
+}

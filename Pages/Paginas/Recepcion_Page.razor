@@ -1,0 +1,293 @@
+﻿@page "/Recepcion"
+
+<EditForm Model="recepcion">
+    <DataAnnotationsValidator/>
+
+    <div class="card align-items-inherit bg-dark mb-5" style="width: 35rem;">
+
+        <div class="card mb-3 bg-secondary">
+
+            <div class="card-header bg-dark">
+                <h3 class="text-white">Recepción</h3>
+            </div>
+
+            <div class="card-body">
+                
+                <div class="form-row align-items-center mb-3">
+                    <div class="col">
+                        <div class="form-group">
+                            <div class="input-group">
+
+                                <span class="input-group-text">Id</span>
+                                <InputNumber class="form-control me-3 rounded-end" @bind-Value="recepcion.RecepcionId"/>
+                                @* <ValidationMessage For="@(() => producto.ProductoId)"/> *@
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+
+                @* <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Fecha</span>
+                        <InputDate class="form-control" @bind-Value="fecha" />
+                        @* <ValidationMessage For="@(() => fecha)"/> 
+
+                    </div>
+                </div> *@
+
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Cliente</span>
+                        <select class="form-select" aria-label="Default select example" @bind="recepcion.ClienteId">
+                            <option selected disabled value="">Selecciona...</option>
+                            @foreach (var item in ClientesBLL.GetList())
+                            {
+                                <option value=@item.ClienteId >@item.Nombre @item.Apellido</option>
+                            }
+                        </select>
+                        
+                        <ValidationMessage For="@(() => Cliente)"/>
+                        
+                        <div class="input-group-append mx-3">
+                            <button type="button" class="btn btn-dark input-group-text" @onclick="BuscarCliente"> 
+                                <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                @if(cliente.ClienteId  > 0){
+
+                    <div class="form-group mb-3">
+                        <div class="input-group">
+
+                            <span class="input-group-text">Dispositivo</span>
+                            <select class="form-select" aria-label="Default select example" @bind="dispositivo.DispositivoId">
+                                <option selected disabled value="">Selecciona...</option>
+                                @foreach (var dispositivo in cliente.Dispositivos)
+                                {
+                                    <option value=@dispositivo.DispositivoId >@dispositivo.Marca @dispositivo.Modelo</option>
+                                }
+                            </select>
+                            
+                            <ValidationMessage For="@(() => Cliente)"/>
+                            
+                        </div>
+                    </div>
+
+                }
+
+                @* <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Problemas</span>
+                        <InputText class="form-control" />@* @bind-Value="problemas"  
+                        <ValidationMessage For="@(() => problemas)"/>
+
+                    </div>
+                </div>  *@
+
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Técnico</span>
+                        <InputText class="form-control" @bind-Value="recepcion.Tecnico"/>
+                        <ValidationMessage For="@(() => Tecnico)"/>
+
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Categoría</span>
+                        <select class="form-select" aria-label="Default select example" @bind="recepcion.CategoriaId">
+                            @foreach (var categoria in CategoriasBLL.GetList())
+                            {
+                                <option value=@categoria.CategoriaId> @categoria.Nombre</option>
+                            }
+                        </select>
+                        <ValidationMessage For="@(() => Cliente)"/>
+
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Producto</span>
+                        <select class="form-select" aria-label="Default select example" @bind="Cliente">
+                            @foreach (var producto in ProductosBLL.GetList())
+                            {
+                                <option value=@producto.ProductoId>@producto.Nombre</option>
+                            }
+                        </select>
+                        <ValidationMessage For="@(() => Cliente)"/>
+
+                    </div>
+                </div>
+                
+                
+        
+            </div> 
+            
+        </div>
+
+        @* <div class="card align-items-center" style="box-shadow: 8px 8px rgba(0, 0, 0, 0.26);"> *@
+
+            <div class="card-header align-items-center text-white">
+                <h3>Detalle</h3>
+            </div>
+
+            <div class="card-body bg-secondary">
+
+                <div class="form-row align-items-center">
+                    <div class="col">
+                        <div class="form-group" style="margin: 5px;">
+
+                            <div class="input-group">
+                                <InputText style="margin: 5px;" class="form-control" 
+                                    placeholder="Descripción del detalle" @bind-Value="Detalle"/>
+
+                                <button type="button" style="margin: 5px;" class="btn btn-dark"
+                                    @onclick="AgregarDetalle" 
+                                    >Agregar Detalle
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table table-light mt-3">
+                    <thead class="thead mb-1">
+                        <tr class="table">
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                         @foreach(var detalle in problemas)
+                        {
+                            <tr>
+                                <td class="mb-2">@detalle.Detalle</td>
+                                <td class="d-flex justify-content-end"><span class="btn btn-sm btn-outline-secondary oi oi-ban" href="#" @onclick=@(() => RemoverFila(detalle))> Remover</span> </td> 
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+
+
+            </div>
+        @* </div>  *@
+
+
+        <div class="form-group text-center mb-3 mt-3">
+             <button type="button" class="btn btn-lg btn-outline-primary mx-3" @onclick="Nuevo">
+                Nuevo
+            </button>
+            <button type="button" class="btn btn-lg btn-outline-success mx-3" @onclick="Guardar">
+                Guardar
+            </button>
+            <button type="button" class="btn btn-lg btn-outline-danger mx-3" @onclick="Eliminar">
+                Eliminar
+            </button>
+        </div> 
+
+    </div> 
+    
+</EditForm>
+
+
+@code {
+
+    //Utilidades
+    Cliente cliente = new Cliente();
+    List<Categoria> categorias = new List<Categoria>();
+    List<Producto> productos = new List<Producto>();
+
+    Dispositivo dispositivo = new Dispositivo();
+
+    int ClienteId;
+
+
+    //Entidad
+    Recepcion recepcion = new Recepcion();
+
+
+    //Propiedades Recepcion
+    private int RecepcionId;  
+    DateTime fecha = DateTime.Now; 
+
+    private string Cliente;
+    
+    List<RecepcionDetalle> problemas = new List<RecepcionDetalle>(); // en la linea 59 hay que manejarlo con un metodo aparte para que el bind funcione correctamente
+
+    private string Tecnico;
+
+    Categoria categoria = new Categoria();
+
+    Producto producto = new Producto();
+
+    
+    //Metodos Recepcion
+    void Nuevo(){
+
+        cliente = new Cliente();
+        dispositivo = new Dispositivo();
+
+    }
+
+    void Guardar(){
+
+        for(int s = 0; s < problemas.Count(); s++)
+            recepcion.Problemas.Add(problemas[s]);
+        
+        RecepcionesBLL.Create(recepcion);
+
+    }
+
+    void Eliminar(){
+
+    }
+
+    void BuscarCliente(){
+        
+        Nuevo();
+
+        cliente = ClientesBLL.Read(recepcion.ClienteId);
+
+        Console.WriteLine(cliente.Dispositivos.Count());
+
+        @* dispositivos = cliente.Dispositivos; *@
+
+    }
+
+    //Propiedades RecepcionDetalle
+    string Detalle;
+
+
+    //Metodos Detalle
+
+    void AgregarDetalle(){
+        
+        RecepcionDetalle detalle = new RecepcionDetalle();
+
+        @* detalle.RecepcionDetalleId = problemas.Count(); *@
+        detalle.Detalle = Detalle;
+        
+        problemas.Add(detalle);
+
+    }
+
+    void RemoverFila(RecepcionDetalle detalle){
+        
+        problemas.Remove(detalle);
+
+    }
+    
+}

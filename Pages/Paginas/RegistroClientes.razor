@@ -1,0 +1,140 @@
+﻿@page "/RegistroClientes"
+
+<EditForm Model="cliente" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator/>
+
+    <div class="card align-items-inherit bg-dark mb-5" style="width: 35rem;">
+
+        <div class="card mb-3 bg-secondary">
+
+            <div class="card-header bg-dark">
+                <h3 class="text-white">Registro de Clientes</h3>
+            </div>
+
+            <div class="card-body">
+
+                <div class="form-row align-items-center mb-3">
+                    <div class="col">
+                        <div class="form-group">
+                            <div class="input-group">
+
+                                <span class="input-group-text">Id</span>
+                                <InputNumber class="form-control me-3 rounded-end"  @bind-Value=cliente.ClienteId/>
+                                <ValidationMessage For="@(() => cliente.ClienteId)"/>
+                                <div class="input-group-append">
+                                     <button type="button" class="btn btn-dark input-group-text" @onclick="Buscar" > 
+                                         <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Nombre</span>
+                        <InputText class="form-control" @bind-Value=cliente.Nombre/>
+                        <ValidationMessage For="@(() => cliente.Nombre)"/>
+
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Apellido</span>
+                        <InputText class="form-control" @bind-Value=cliente.Apellido/>
+                        <ValidationMessage For="@(() => cliente.Apellido)"/>
+
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Cédula</span>
+                        <InputText class="form-control" @bind-Value=cliente.Cedula/>
+                        <ValidationMessage For="@(() => cliente.Cedula)"/>
+
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Teléfono</span>
+                        <InputText class="form-control" @bind-Value=cliente.Telefono/>
+                        <ValidationMessage For="@(() => cliente.Telefono)"/>
+
+                    </div>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <div class="input-group">
+
+                        <span class="input-group-text">Fecha</span>
+                        <InputDate class="form-control" @bind-Value=cliente.Fecha/>
+                        <ValidationMessage For="@(() => cliente.Fecha)"/>
+
+                    </div>
+                </div>
+
+            </div>
+            
+        </div>
+
+        <div class="form-group text-center mb-3">
+             <button type="button" class="btn btn-lg btn-outline-primary mx-3" @onclick="Nuevo">
+                Nuevo
+            </button>
+            <button type="button" class="btn btn-lg btn-outline-success mx-3" @onclick="Guardar">
+                Guardar
+            </button>
+            <button type="button" class="btn btn-lg btn-outline-danger mx-3" @onclick="Eliminar">
+                Eliminar
+            </button>
+        </div>
+
+    </div> 
+    
+</EditForm>
+
+
+@code {
+
+    //Propiedades
+    public Cliente cliente = new Cliente();
+
+
+    //Metodos
+    void Nuevo(){
+        
+        cliente = new Cliente();
+
+    }
+
+    void Guardar(){
+
+        ClientesBLL.Create(cliente);
+
+    }
+
+    void Eliminar(){
+
+        Buscar();
+        ClientesBLL.Delete(cliente);
+
+    }
+
+    //Utilidades
+
+    void Buscar(){
+
+        cliente = ClientesBLL.Read(cliente.ClienteId);
+
+    }
+    
+}
