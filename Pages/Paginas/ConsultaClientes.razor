@@ -73,6 +73,14 @@
                                 </button>
                             </div>  
 
+                        }else{
+
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-dark input-group-text ms-3" @onclick=Buscar> 
+                                    <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                                </button>
+                            </div>
+
                         }
 
 
@@ -138,11 +146,17 @@
 
     public DateTime CriterioFecha = DateTime.Now;
 
+    void Buscar(){
+
+        clientes = ClientesBLL.GetList();
+
+    }
+
     void BuscarId(){
 
         if(CriterioId == 0){
 
-            clientes = ClientesBLL.GetList();
+            Buscar();
 
         }else{
 
@@ -156,7 +170,7 @@
 
         if(CriterioNombre == null){
             
-            clientes = ClientesBLL.GetList();
+            Buscar();
 
         }else{
 
@@ -170,7 +184,7 @@
 
         if(CriterioApellido == null){
             
-            clientes = ClientesBLL.GetList();
+            Buscar();
 
         }else{
 

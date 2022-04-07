@@ -139,9 +139,9 @@
 
 @code {
 
-    List<Dispositivo> dispositivos = new List<Dispositivo>();
+    private List<Dispositivo> dispositivos = new List<Dispositivo>();
 
-    Cliente cliente = new Cliente();
+    private Cliente cliente = new Cliente();
 
     private string Filtro;
 
@@ -168,7 +168,7 @@
 
     void BuscarCliente(){
 
-        Nuevo();
+        @* Nuevo(); *@
         cliente = ClientesBLL.Read(ClienteId);
     }
 

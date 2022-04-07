@@ -47,8 +47,9 @@ public class ClientesBLL{
     
         bool successfull = false;
 
-        // contexto.Entry(cliente).State = EntityState.Deleted;
+        
         contexto.Remove(cliente);
+        // contexto.Entry(cliente).State = EntityState.Deleted;
         successfull = contexto.SaveChanges() > 0;
         
         return successfull;
@@ -82,7 +83,7 @@ public class ClientesBLL{
 
         List<Cliente> dispositivos = new List<Cliente>();
         
-        dispositivos = contexto.Clientes.Include(x => x.Dispositivos).Where(x => x.Dispositivos.Count() > 0 ).ToList();
+        dispositivos = contexto.Clientes.Include(x => x.Dispositivos).Where(x => x.Dispositivos.Count() > 0 ).AsNoTracking().ToList();
         
         return dispositivos;
         
