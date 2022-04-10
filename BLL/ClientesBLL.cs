@@ -7,8 +7,8 @@ public class ClientesBLL{
     public static bool Create(Cliente cliente){//Inserta un Cliente a la base de datos
 
         bool successfull = false;
-        contexto.Clientes.Add(cliente);
-        // contexto.Entry(cliente).State = EntityState.Added;
+        
+        contexto.Add(cliente);
 
         successfull = contexto.SaveChanges() > 0;
 
@@ -20,8 +20,6 @@ public class ClientesBLL{
 
         Cliente cliente = new Cliente();
 
-        // cliente = contexto.Clientes.Find(Id);
-
         cliente = contexto.Clientes.Include(x => x.Dispositivos).Where(x => x.ClienteId == Id).SingleOrDefault();
 
         return cliente;
@@ -32,9 +30,20 @@ public class ClientesBLL{
         
         bool successfull = false;
 
-        if(contexto.Clientes.Any(l => l.ClienteId == cliente.ClienteId)){
+
+        if(cliente.Dispositivos.Any()){
+            
+            Delete(cliente);
+            // successfull = contexto.SaveChanges() > 0;
+
+            Create(cliente);
+            // successfull = contexto.SaveChanges() > 0;
+
+
+        }else if(contexto.Clientes.Any(l => l.ClienteId == cliente.ClienteId)){
+            
             contexto.Clientes.Update(cliente);
-            //contexto.Entry(cliente).State = EntityState.Modified;
+            
             successfull = contexto.SaveChanges() > 0;
 
         }
@@ -46,10 +55,9 @@ public class ClientesBLL{
     public static bool Delete(Cliente cliente){//Dado un Cliente, elimina el equivalente en la base de datos
     
         bool successfull = false;
-
         
         contexto.Remove(cliente);
-        // contexto.Entry(cliente).State = EntityState.Deleted;
+        
         successfull = contexto.SaveChanges() > 0;
         
         return successfull;

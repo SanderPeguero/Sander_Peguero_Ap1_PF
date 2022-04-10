@@ -1,5 +1,7 @@
 ﻿@page "/RegistroClientes"
 
+@inject IToastService toast
+
 <EditForm Model="cliente" OnValidSubmit="Guardar">
     <DataAnnotationsValidator/>
 
@@ -106,7 +108,7 @@
 @code {
 
     //Propiedades
-    public Cliente cliente = new Cliente();
+    private Cliente cliente = new Cliente();
 
 
     //Metodos
@@ -121,10 +123,13 @@
         if(ClientesBLL.Read(cliente.ClienteId) == null){
             
             ClientesBLL.Create(cliente);
+            toast.ShowSuccess("Se ha Guardado en la Base de Datos");
 
         }else{
             
             ClientesBLL.Update(cliente);
+            toast.ShowWarning("El cliente ya existia en la Base de Datos");
+            toast.ShowSuccess("He Actualizado los datos en su lugar");
 
         }
 
@@ -133,15 +138,38 @@
     void Eliminar(){
 
         Buscar();
-        ClientesBLL.Delete(cliente);
+        
+        if(ClientesBLL.Delete(cliente)){
+
+            toast.ShowSuccess("Cliente Eliminado");
+
+        }else{
+
+            toast.ShowSuccess("No se ha podido Eliminar el Cliente");
+
+        }
 
     }
 
     //Utilidades
 
     void Buscar(){
+        
+        if(ClientesBLL.Read(cliente.ClienteId) != null){
 
-        cliente = ClientesBLL.Read(cliente.ClienteId);
+            int Id = cliente.ClienteId;
+            cliente = ClientesBLL.Read(cliente.ClienteId);
+            cliente.ClienteId = Id;
+
+            toast.ShowSuccess("Se ha encontrado el cliente " + cliente.ClienteId);
+
+        }else{
+
+            //Hacer algo si no se encuentra cliente en la base de datos
+            cliente = new Cliente();
+            toast.ShowError("No se ha encontrado en la base de datos");
+            
+        }
 
     }
     

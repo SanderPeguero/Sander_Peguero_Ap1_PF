@@ -1,5 +1,7 @@
 ﻿@page "/ConsultaClientes"
 
+@inject IToastService toast
+
 <EditForm Model="clientes">
     <DataAnnotationsValidator/>
 
@@ -148,7 +150,15 @@
 
     void Buscar(){
 
-        clientes = ClientesBLL.GetList();
+        if(ClientesBLL.GetList().Any()){
+
+            clientes = ClientesBLL.GetList();
+            toast.ShowSuccess("Se han encontrado usuarios en la Base de Datos");
+
+        }else{
+
+            toast.ShowSuccess("No se han encontrado usuarios en la Base de Datos");
+        }
 
     }
 
@@ -160,7 +170,16 @@
 
         }else{
 
-            clientes = ClientesBLL.GetList(x => x.ClienteId == CriterioId);
+            if(ClientesBLL.GetList(x => x.ClienteId == CriterioId).Any()){
+                
+                clientes = ClientesBLL.GetList(x => x.ClienteId == CriterioId);
+                toast.ShowSuccess("Existen Coincidencias");
+
+            }else{
+                clientes = new List<Cliente>();
+                toast.ShowError("No Existen Coincidencias");
+
+            }
             
         }
 
@@ -174,7 +193,15 @@
 
         }else{
 
-            clientes = ClientesBLL.GetList(x => x.Nombre.ToLower().Contains(CriterioNombre.ToLower()));
+            if(ClientesBLL.GetList(x => x.Nombre.ToLower().Contains(CriterioNombre.ToLower())).Any()){
+
+                clientes = ClientesBLL.GetList(x => x.Nombre.ToLower().Contains(CriterioNombre.ToLower()));
+                toast.ShowSuccess("Existen Coincidencias");
+
+            }else{
+                clientes = new List<Cliente>();
+                toast.ShowError("No Existen Coincidencias");
+            }   
 
         }
 
@@ -188,7 +215,17 @@
 
         }else{
 
-            clientes = ClientesBLL.GetList(x => x.Apellido.ToLower().Contains(CriterioApellido.ToLower()));
+            if(ClientesBLL.GetList(x => x.Apellido.ToLower().Contains(CriterioApellido.ToLower())).Any()){
+
+                clientes = ClientesBLL.GetList(x => x.Apellido.ToLower().Contains(CriterioApellido.ToLower()));
+                toast.ShowSuccess("Existen Coincidencias");
+
+            }else{
+
+                clientes = new List<Cliente>();
+                toast.ShowError("No Existen Coincidencias");
+
+            }
 
         }
 
@@ -196,8 +233,18 @@
     }
 
     void BuscarFecha(){
+        
+        if(ClientesBLL.GetList(x => x.Fecha > CriterioFecha).Any()){
 
-        clientes = ClientesBLL.GetList(x => x.Fecha > CriterioFecha);
+            clientes = ClientesBLL.GetList(x => x.Fecha > CriterioFecha);
+            toast.ShowSuccess("Existen Coincidencias");
+
+        }else{
+
+            clientes = new List<Cliente>();
+            toast.ShowError("No Existen Coincidencias");
+
+        }
 
     }
     

@@ -31,13 +31,32 @@ public class RecepcionesBLL{
         
         bool successfull = false;
 
-        if(contexto.Recepciones.Any(l => l.RecepcionId == recepcion.RecepcionId)){
+        // if(contexto.Recepciones.Any(l => l.RecepcionId == recepcion.RecepcionId)){
 
-            // contexto.Entry(recepcion).State = EntityState.Modified;
+        //     // contexto.Entry(recepcion).State = EntityState.Modified;
+        //     contexto.Recepciones.Update(recepcion);
+        //     successfull = contexto.SaveChanges() > 0;
+
+        // }
+
+
+        if(recepcion.Problemas.Any()){
+            
+            Delete(recepcion);
+            successfull = contexto.SaveChanges() > 0;
+
+            Create(recepcion);
+            successfull = contexto.SaveChanges() > 0;
+
+
+        }else if(contexto.Recepciones.Any(l => l.RecepcionId == recepcion.RecepcionId)){
+            
             contexto.Recepciones.Update(recepcion);
+            
             successfull = contexto.SaveChanges() > 0;
 
         }
+
 
         return successfull;
 

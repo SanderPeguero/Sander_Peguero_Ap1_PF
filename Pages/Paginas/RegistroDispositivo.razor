@@ -1,5 +1,7 @@
 ﻿@page "/RegistroDispositivos"
 
+@inject IToastService toast
+
 <EditForm Model="dispositivo" OnValidSubmit="Guardar">
     <DataAnnotationsValidator/>
 
@@ -194,19 +196,35 @@
     //Metodos Utilidad
 
     void Buscar(){
-        
-        if(DispositivoNo < 1){
 
-            DispositivoNo = 1;
-            cliente = ClientesBLL.Read(dispositivo.ClienteId);
-            dispositivo = cliente.Dispositivos[DispositivoNo - 1];
-
-        }else{
+        if(ClientesBLL.Read(dispositivo.ClienteId) != null){
             
             cliente = ClientesBLL.Read(dispositivo.ClienteId);
-            dispositivo = cliente.Dispositivos[DispositivoNo - 1];
 
-        }
+            if(cliente.Dispositivos.Any()){
+
+                if(DispositivoNo < 1){
+
+                    DispositivoNo = 1;
+                    dispositivo = cliente.Dispositivos[DispositivoNo - 1];
+
+                }else{
+                    
+                    dispositivo = cliente.Dispositivos[DispositivoNo - 1];
+
+                }
+
+            }else{
+
+                //Hacer algo si no se encuentran dispositivos en el usuario
+
+            }
+
+        }else{
+
+            //Hacer algo si no se encuentra un usuario en la base de Datos
+
+        }        
 
     }
 

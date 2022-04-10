@@ -1,5 +1,7 @@
 ﻿@page "/ConsultaDispositivos"
 
+@inject IToastService toast
+
 <EditForm Model="dispositivos">
     <DataAnnotationsValidator/>
 
@@ -161,15 +163,35 @@
         dispositivos = new List<Dispositivo>();
     }
     void Buscar(){
+    
+        if(cliente.Dispositivos.Any()){
+            
+            dispositivos = cliente.Dispositivos;
+            toast.ShowSuccess(cliente.Nombre + " " + cliente.Apellido + " tiene dispositivos");
 
-        dispositivos = cliente.Dispositivos;
+        }else{
+    
+            toast.ShowError(cliente.Nombre + " " + cliente.Apellido + " no tiene dispositivos");
+            dispositivos = new List<Dispositivo>();
+        }
 
     }
 
     void BuscarCliente(){
 
         @* Nuevo(); *@
-        cliente = ClientesBLL.Read(ClienteId);
+        if(ClientesBLL.Read(ClienteId) != null){
+
+            cliente = ClientesBLL.Read(ClienteId);
+            Buscar();
+
+        }else{
+
+            //Hacer algo si no encuentra un cliente en la base de Datos
+            toast.ShowWarning("Por favor seleccione un usuario");
+
+        }
+
     }
 
     void BuscarId(){
