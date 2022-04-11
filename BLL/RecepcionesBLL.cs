@@ -30,7 +30,7 @@ public class RecepcionesBLL{
 
         try{
 
-            recepcion = contexto.Recepciones.Find(Id);
+            recepcion = contexto.Recepciones.Include(x => x.Problemas).Where(x => x.RecepcionId == Id).SingleOrDefault();
 
         }catch(Exception e){
 

@@ -21,7 +21,7 @@
                             <div class="input-group">
 
                                 <span class="input-group-text">Id</span>
-                                <InputNumber class="form-control me-3 rounded-end" @bind-Value="recepcion.RecepcionId"/>
+                                <InputNumber class="form-control me-3 rounded-end" @bind-Value="RecepcionId"/>
                                 @* <ValidationMessage For="@(() => producto.ProductoId)"/> *@
                                 
 
@@ -225,8 +225,9 @@
 
     //Propiedades Recepcion
     private string Cliente;
+
+    private int RecepcionId;
     
-    List<RecepcionDetalle> problemas = new List<RecepcionDetalle>(); // en la linea 59 hay que manejarlo con un metodo aparte para que el bind funcione correctamente
     
     //Metodos Recepcion
     void Nuevo(){
@@ -239,13 +240,30 @@
 
     void Guardar(){
 
-        for(int s = 0; s < problemas.Count(); s++)
-            recepcion.Problemas.Add(problemas[s]);
-        
-        if(RecepcionesBLL.Create(recepcion)){
+        recepcion.RecepcionId = RecepcionId;
+
+        if(RecepcionesBLL.Read(RecepcionId) != null){
             
-            toast.ShowSuccess("Guardado con Exito");
+            for(int s = 0; s < problemas.Count(); s++)
+                recepcion.Problemas.Add(problemas[s]);
             
+            if(RecepcionesBLL.Update(recepcion)){
+                
+                toast.ShowSuccess("Guardado con Exito");
+
+            }
+
+        }else{
+
+            for(int s = 0; s < problemas.Count(); s++)
+                recepcion.Problemas.Add(problemas[s]);
+            
+            if(RecepcionesBLL.Create(recepcion)){
+                
+                toast.ShowSuccess("Guardado con Exito");
+
+            }
+
         }
 
     }
@@ -253,23 +271,25 @@
     void Eliminar(){
 
         RecepcionesBLL.Delete(recepcion);
+
     }
 
     void Buscar(){
 
-
-
-        if(RecepcionesBLL.Read(recepcion.RecepcionId) != null){
+        if(RecepcionesBLL.Read(RecepcionId) != null){
             
-            recepcion = RecepcionesBLL.Read(recepcion.RecepcionId);
+            recepcion = RecepcionesBLL.Read(RecepcionId);
             
             cliente = ClientesBLL.Read(recepcion.ClienteId);
+
+            problemas = recepcion.Problemas;
 
             toast.ShowSuccess("Existen Coincidencias");
 
         }else{
-
-           toast.ShowError("No Existen Coincidencias");
+            
+            Nuevo();
+            toast.ShowError("No Existen Coincidencias");
 
         }  
 
@@ -284,12 +304,12 @@
 
         Console.WriteLine(cliente.Dispositivos.Count());
 
-        @* dispositivos = cliente.Dispositivos; *@
-
     }
 
     //Propiedades RecepcionDetalle
     string Detalle;
+
+    List<RecepcionDetalle> problemas = new List<RecepcionDetalle>();
 
 
     //Metodos Detalle
@@ -298,7 +318,6 @@
         
         RecepcionDetalle detalle = new RecepcionDetalle();
 
-        @* detalle.RecepcionDetalleId = problemas.Count(); *@
         detalle.Detalle = Detalle;
         
         problemas.Add(detalle);
