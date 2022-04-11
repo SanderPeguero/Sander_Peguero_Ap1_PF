@@ -24,6 +24,13 @@
                                 <InputNumber class="form-control me-3 rounded-end" @bind-Value="recepcion.RecepcionId"/>
                                 @* <ValidationMessage For="@(() => producto.ProductoId)"/> *@
                                 
+
+                                <div class="input-group-append ms-3">
+                                    <button type="button" class="btn btn-dark input-group-text" @onclick="Buscar"> 
+                                        <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -224,6 +231,7 @@
     //Metodos Recepcion
     void Nuevo(){
 
+        recepcion = new Recepcion();
         cliente = new Cliente();
         dispositivo = new Dispositivo();
 
@@ -234,7 +242,11 @@
         for(int s = 0; s < problemas.Count(); s++)
             recepcion.Problemas.Add(problemas[s]);
         
-        RecepcionesBLL.Create(recepcion);
+        if(RecepcionesBLL.Create(recepcion)){
+            
+            toast.ShowSuccess("Guardado con Exito");
+            
+        }
 
     }
 
@@ -243,9 +255,30 @@
         RecepcionesBLL.Delete(recepcion);
     }
 
+    void Buscar(){
+
+
+
+        if(RecepcionesBLL.Read(recepcion.RecepcionId) != null){
+            
+            recepcion = RecepcionesBLL.Read(recepcion.RecepcionId);
+            
+            cliente = ClientesBLL.Read(recepcion.ClienteId);
+
+            toast.ShowSuccess("Existen Coincidencias");
+
+        }else{
+
+           toast.ShowError("No Existen Coincidencias");
+
+        }  
+
+    }
+
     void BuscarCliente(){
         
-        Nuevo();
+        cliente = new Cliente();
+        dispositivo = new Dispositivo();
 
         cliente = ClientesBLL.Read(recepcion.ClienteId);
 
