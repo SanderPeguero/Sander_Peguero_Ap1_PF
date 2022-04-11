@@ -7,11 +7,21 @@ public class CategoriasBLL{
 
         bool successfull = false;
 
+        try{
+            
         // contexto.Entry(categoria).State = EntityState.Added;
-        contexto.Categorias.Add(categoria);
 
-        successfull = contexto.SaveChanges() > 0;
+            contexto.Categorias.Add(categoria);
 
+            successfull = contexto.SaveChanges() > 0;
+
+
+        }catch(Exception e){
+            
+            Console.WriteLine(e.Message);
+
+        }
+        
         return successfull;
 
     }
@@ -20,8 +30,16 @@ public class CategoriasBLL{
 
         Categoria categoria = new Categoria();
 
-        categoria = contexto.Categorias.Find(Id);
+        try{
 
+            categoria = contexto.Categorias.Find(Id);
+
+        }catch(Exception e){
+
+            Console.WriteLine(e.Message);
+
+        }
+        
         return categoria;
 
     }
@@ -46,9 +64,17 @@ public class CategoriasBLL{
     
         bool successfull = false;
 
+        try{
+            
+            contexto.Remove(categoria);
+            successfull = contexto.SaveChanges() > 0;
+
+        }catch(Exception e){
+
+            Console.WriteLine(e.Message);
+
+        }
         // contexto.Entry(categoria).State = EntityState.Deleted;
-        contexto.Remove(categoria);
-        successfull = contexto.SaveChanges() > 0;
         
         return successfull;
 

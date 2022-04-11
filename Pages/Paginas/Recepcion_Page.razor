@@ -98,7 +98,7 @@
 
                         <span class="input-group-text">Técnico</span>
                         <InputText class="form-control" @bind-Value="recepcion.Tecnico"/>
-                        <ValidationMessage For="@(() => Tecnico)"/>
+                        <ValidationMessage For="@(() => recepcion.Tecnico)"/>
 
                     </div>
                 </div>
@@ -209,32 +209,17 @@
 
     //Utilidades
     Cliente cliente = new Cliente();
-    List<Categoria> categorias = new List<Categoria>();
-    List<Producto> productos = new List<Producto>();
 
     Dispositivo dispositivo = new Dispositivo();
-
-    int ClienteId;
-
 
     //Entidad
     Recepcion recepcion = new Recepcion();
 
 
     //Propiedades Recepcion
-    private int RecepcionId;  
-    DateTime fecha = DateTime.Now; 
-
     private string Cliente;
     
     List<RecepcionDetalle> problemas = new List<RecepcionDetalle>(); // en la linea 59 hay que manejarlo con un metodo aparte para que el bind funcione correctamente
-
-    private string Tecnico;
-
-    Categoria categoria = new Categoria();
-
-    Producto producto = new Producto();
-
     
     //Metodos Recepcion
     void Nuevo(){

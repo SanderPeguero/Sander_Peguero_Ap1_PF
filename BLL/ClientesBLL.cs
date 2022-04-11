@@ -8,9 +8,17 @@ public class ClientesBLL{
 
         bool successfull = false;
         
-        contexto.Add(cliente);
+        try{
 
-        successfull = contexto.SaveChanges() > 0;
+            contexto.Add(cliente);
+
+            successfull = contexto.SaveChanges() > 0;
+
+        }catch(Exception e){
+            
+            Console.WriteLine(e.Message);
+
+        }
 
         return successfull;
 
@@ -19,9 +27,17 @@ public class ClientesBLL{
     public static Cliente Read(int Id){//Lee el Cliente con el id dado en la base de datos y lo devuelve
 
         Cliente cliente = new Cliente();
+        
+        try{
 
-        cliente = contexto.Clientes.Include(x => x.Dispositivos).Where(x => x.ClienteId == Id).SingleOrDefault();
+            cliente = contexto.Clientes.Include(x => x.Dispositivos).Where(x => x.ClienteId == Id).SingleOrDefault();
 
+        }catch(Exception e){
+            
+            Console.WriteLine(e.Message);
+
+        }
+        
         return cliente;
 
     }
@@ -30,24 +46,28 @@ public class ClientesBLL{
         
         bool successfull = false;
 
+        try{
 
-        if(cliente.Dispositivos.Any()){
-            
-            Delete(cliente);
-            // successfull = contexto.SaveChanges() > 0;
+            if(cliente.Dispositivos.Any()){
+                
+                Delete(cliente);
+                
+                Create(cliente);
 
-            Create(cliente);
-            // successfull = contexto.SaveChanges() > 0;
+            }else if(contexto.Clientes.Any(l => l.ClienteId == cliente.ClienteId)){
+                
+                contexto.Clientes.Update(cliente);
+                
+                successfull = contexto.SaveChanges() > 0;
 
+            }
 
-        }else if(contexto.Clientes.Any(l => l.ClienteId == cliente.ClienteId)){
-            
-            contexto.Clientes.Update(cliente);
-            
-            successfull = contexto.SaveChanges() > 0;
+        }catch(Exception e){
+
+            Console.WriteLine(e.Message);
 
         }
-
+        
         return successfull;
 
     }
@@ -55,10 +75,18 @@ public class ClientesBLL{
     public static bool Delete(Cliente cliente){//Dado un Cliente, elimina el equivalente en la base de datos
     
         bool successfull = false;
-        
-        contexto.Remove(cliente);
-        
-        successfull = contexto.SaveChanges() > 0;
+
+        try{
+
+            contexto.Remove(cliente);
+            
+            successfull = contexto.SaveChanges() > 0;
+
+        }catch(Exception e){
+
+            Console.WriteLine(e.Message);
+
+        }
         
         return successfull;
 
@@ -74,11 +102,21 @@ public class ClientesBLL{
 
     public static List<Cliente> GetList(Expression<Func<Cliente, bool>> criterio)
     {
+        
         List<Cliente> clientes = new List<Cliente>();
-    
-        clientes = contexto.Clientes.Where(criterio).ToList();
+
+        try{
+
+            clientes = contexto.Clientes.Where(criterio).ToList();
+
+        }catch(Exception e){
+
+            Console.WriteLine(e.Message);
+
+        }
             
         return clientes;
+
     }
 
     public static List<Cliente> GetList(){
@@ -91,11 +129,18 @@ public class ClientesBLL{
 
         List<Cliente> dispositivos = new List<Cliente>();
         
-        dispositivos = contexto.Clientes.Include(x => x.Dispositivos).Where(x => x.Dispositivos.Count() > 0 ).AsNoTracking().ToList();
+        try{
+
+            dispositivos = contexto.Clientes.Include(x => x.Dispositivos).Where(x => x.Dispositivos.Count() > 0 ).AsNoTracking().ToList();
+
+        }catch(Exception e){
+
+            Console.WriteLine(e.Message);
+
+        }
         
         return dispositivos;
         
     }
-
 
 }

@@ -51,7 +51,7 @@
 
                             @if (Filtro == "1")
                             {
-                                 <div class = "flex-fill mx-2">
+                                <div class = "flex-fill mx-2">
                                     <InputNumber class="form-control" @bind-Value=CriterioId/>
                                 </div>
 
@@ -61,6 +61,30 @@
                                     </button>
                                 </div>
                             
+                            }else if(Filtro == "2"){
+
+                                <div class = "flex-fill mx-2">
+                                    <InputText class="form-control" @bind-Value=CriterioMarca/>
+                                </div>
+
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-dark input-group-text" @onclick=BuscarMarca> 
+                                        <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+
+                            }else if(Filtro == "3"){
+
+                                <div class = "flex-fill mx-2">
+                                    <InputText class="form-control" @bind-Value=CriterioModelo/>
+                                </div>
+
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-dark input-group-text" @onclick=BuscarModelo> 
+                                        <span class="oi oi-magnifying-glass" title="magnifying-glass" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+
                             }else if(Filtro == "4"){
                                 
                                 <div class = "flex-fill mx-2">
@@ -179,7 +203,6 @@
 
     void BuscarCliente(){
 
-        @* Nuevo(); *@
         if(ClientesBLL.Read(ClienteId) != null){
 
             cliente = ClientesBLL.Read(ClienteId);
@@ -210,13 +233,13 @@
 
     void BuscarMarca(){
 
-        if(CriterioMarca == null){
+        if(CriterioMarca == null || CriterioMarca == ""){
             
             Buscar();
 
         }else{
 
-            cliente = ClientesBLL.Read(ClienteId);
+            dispositivos = cliente.Dispositivos.Where(x => x.Marca.ToLower() == CriterioMarca.ToLower()).ToList();
 
         }
 
@@ -224,16 +247,23 @@
 
     void BuscarModelo(){
 
-        cliente = ClientesBLL.Read(ClienteId);
+        if(CriterioModelo == null || CriterioModelo == ""){
+
+            Buscar();
+
+        }else{
+
+            dispositivos = cliente.Dispositivos.Where(x => x.Modelo.ToLower() == CriterioModelo.ToLower()).ToList();   
+
+        }
 
     }
 
     void BuscarTeclado(){
-
+            
         dispositivos = cliente.Dispositivos.Where(x => x.Teclado == CriterioTeclado).ToList();
 
     }
-
 
     
 }

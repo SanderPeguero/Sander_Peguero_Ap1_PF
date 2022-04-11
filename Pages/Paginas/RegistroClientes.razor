@@ -120,16 +120,22 @@
 
     void Guardar(){
 
-        if(ClientesBLL.Read(cliente.ClienteId) == null){
-            
-            ClientesBLL.Create(cliente);
-            toast.ShowSuccess("Se ha Guardado en la Base de Datos");
+        if(cliente.ClienteId < 1){
 
         }else{
-            
-            ClientesBLL.Update(cliente);
-            toast.ShowWarning("El cliente ya existia en la Base de Datos");
-            toast.ShowSuccess("He Actualizado los datos en su lugar");
+
+            if(ClientesBLL.Read(cliente.ClienteId) == null){
+                
+                ClientesBLL.Create(cliente);
+                toast.ShowSuccess("Se ha Guardado en la Base de Datos");
+
+            }else if(ClientesBLL.Read(cliente.ClienteId) != null){
+                
+                ClientesBLL.Update(cliente);
+                toast.ShowWarning("El cliente ya existia en la Base de Datos");
+                toast.ShowSuccess("He Actualizado los datos en su lugar");
+
+            }
 
         }
 
@@ -152,7 +158,6 @@
     }
 
     //Utilidades
-
     void Buscar(){
         
         if(ClientesBLL.Read(cliente.ClienteId) != null){

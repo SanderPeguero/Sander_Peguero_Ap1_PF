@@ -8,10 +8,17 @@ public class RecepcionesBLL{
 
         bool successfull = false;
 
-        // contexto.Entry(recepcion).State = EntityState.Added;
-        contexto.Recepciones.Add(recepcion);
+        try{
 
-        successfull = contexto.SaveChanges() > 0;
+            contexto.Recepciones.Add(recepcion);
+
+            successfull = contexto.SaveChanges() > 0;
+
+        }catch(Exception e){
+            
+            Console.WriteLine(e.Message);
+
+        }
 
         return successfull;
 
@@ -21,7 +28,15 @@ public class RecepcionesBLL{
 
         Recepcion recepcion = new Recepcion();
 
-        recepcion = contexto.Recepciones.Find(Id);
+        try{
+
+            recepcion = contexto.Recepciones.Find(Id);
+
+        }catch(Exception e){
+
+            Console.WriteLine(e.Message);
+
+        }
 
         return recepcion;
 
@@ -31,32 +46,30 @@ public class RecepcionesBLL{
         
         bool successfull = false;
 
-        // if(contexto.Recepciones.Any(l => l.RecepcionId == recepcion.RecepcionId)){
+        try{
 
-        //     // contexto.Entry(recepcion).State = EntityState.Modified;
-        //     contexto.Recepciones.Update(recepcion);
-        //     successfull = contexto.SaveChanges() > 0;
+            if(recepcion.Problemas.Any()){
+                
+                Delete(recepcion);
+                successfull = contexto.SaveChanges() > 0;
 
-        // }
-
-
-        if(recepcion.Problemas.Any()){
-            
-            Delete(recepcion);
-            successfull = contexto.SaveChanges() > 0;
-
-            Create(recepcion);
-            successfull = contexto.SaveChanges() > 0;
+                Create(recepcion);
+                successfull = contexto.SaveChanges() > 0;
 
 
-        }else if(contexto.Recepciones.Any(l => l.RecepcionId == recepcion.RecepcionId)){
-            
-            contexto.Recepciones.Update(recepcion);
-            
-            successfull = contexto.SaveChanges() > 0;
+            }else if(contexto.Recepciones.Any(l => l.RecepcionId == recepcion.RecepcionId)){
+                
+                contexto.Recepciones.Update(recepcion);
+                
+                successfull = contexto.SaveChanges() > 0;
+
+            }
+
+        }catch(Exception e){
+
+            Console.WriteLine(e.Message);
 
         }
-
 
         return successfull;
 
@@ -65,27 +78,26 @@ public class RecepcionesBLL{
     public static bool Delete(Recepcion recepcion){//Dada una Recepcion, elimina la equivalente en la base de datos
     
         bool successfull = false;
-
-        // contexto.Entry(recepcion).State = EntityState.Deleted;
-        // List<RecepcionDetalle> nueva = new List<RecepcionDetalle>();
-        // recepcion.Problemas = nueva;
-        // Update(recepcion);
-
         
+        try{
 
-        contexto.Remove(recepcion);
-        successfull = contexto.SaveChanges() > 0;
+            contexto.Remove(recepcion);
+            successfull = contexto.SaveChanges() > 0;
+
+        }catch(Exception e){
+
+            Console.WriteLine(e.Message);
+
+        }
         
         return successfull;
 
     }
 
-    public static Recepcion BuscarTecnico(string Tecnico){
-        
-        return contexto.Recepciones
-            .Where(x => x.Tecnico == Tecnico)
-            .FirstOrDefault();
+    public static List<Recepcion> GetList(){
 
+        return contexto.Recepciones.ToList();
+        
     }
 
 }

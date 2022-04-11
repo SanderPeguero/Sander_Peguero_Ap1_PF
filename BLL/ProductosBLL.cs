@@ -8,10 +8,17 @@ public class ProductosBLL{
 
         bool successfull = false;
 
-        // contexto.Entry(producto).State = EntityState.Added;
-        contexto.Productos.Add(producto);
+        try{
 
-        successfull = contexto.SaveChanges() > 0;
+            contexto.Productos.Add(producto);
+
+            successfull = contexto.SaveChanges() > 0;
+
+        }catch(Exception e){
+
+            Console.WriteLine(e.Message);
+
+        }
 
         return successfull;
 
@@ -20,9 +27,17 @@ public class ProductosBLL{
     public static Producto Read(int Id){//Lee el Producto con el id dado en la base de datos y lo devuelve
 
         Producto producto = new Producto();
+        
+        try{
 
-        producto = contexto.Productos.Find(Id);
+            producto = contexto.Productos.Find(Id);
 
+        }catch(Exception e){
+
+            Console.WriteLine(e.Message);
+
+        }
+        
         return producto;
 
     }
@@ -31,11 +46,18 @@ public class ProductosBLL{
         
         bool successfull = false;
 
-        if(contexto.Productos.Any(l => l.ProductoId == producto.ProductoId)){
+        try{
 
-            // contexto.Entry(producto).State = EntityState.Modified;
-            contexto.Productos.Update(producto);
-            successfull = contexto.SaveChanges() > 0;
+            if(contexto.Productos.Any(l => l.ProductoId == producto.ProductoId)){
+
+                contexto.Productos.Update(producto);
+                successfull = contexto.SaveChanges() > 0;
+
+            }
+
+        }catch(Exception e){
+
+            Console.WriteLine(e.Message);
 
         }
 
@@ -47,9 +69,16 @@ public class ProductosBLL{
     
         bool successfull = false;
 
-        // contexto.Entry(producto).State = EntityState.Deleted;
-        contexto.Productos.Remove(producto);
-        successfull = contexto.SaveChanges() > 0;
+        try{
+
+            contexto.Productos.Remove(producto);
+            successfull = contexto.SaveChanges() > 0;
+
+        }catch(Exception e){
+
+            Console.WriteLine(e.Message);
+
+        }
         
         return successfull;
 
