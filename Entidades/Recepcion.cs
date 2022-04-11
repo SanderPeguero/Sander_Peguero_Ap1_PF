@@ -11,6 +11,8 @@ public class Recepcion{
     [ForeignKey("RecepcionId")]
     public virtual List<RecepcionDetalle> Problemas {get; set;} = new List<RecepcionDetalle>();
 
+    [Required(ErrorMessage = "Campo Obligatorio")]
+    [MinLength(2, ErrorMessage = "Tecnico debe tener mas de 2 caracteres")]
     public string Tecnico {get; set;}
     
     public int ClienteId {get; set;}
