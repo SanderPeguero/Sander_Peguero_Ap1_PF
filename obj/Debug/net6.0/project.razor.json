@@ -12,6 +12,72 @@
   "ProjectWorkspaceState": {
     "TagHelpers": [
       {
+        "HashCode": 1322595466,
+        "Kind": "Components.Component",
+        "Name": "ProyectoFinal.Pages.Paginas.ConsultaDispositivos",
+        "AssemblyName": "ProyectoFinal",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ConsultaDispositivos"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "ProyectoFinal.Pages.Paginas.ConsultaDispositivos"
+        }
+      },
+      {
+        "HashCode": 896274399,
+        "Kind": "Components.Component",
+        "Name": "ProyectoFinal.Pages.Paginas.ConsultaDispositivos",
+        "AssemblyName": "ProyectoFinal",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ProyectoFinal.Pages.Paginas.ConsultaDispositivos"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "ProyectoFinal.Pages.Paginas.ConsultaDispositivos",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": -964417998,
+        "Kind": "Components.Component",
+        "Name": "ProyectoFinal.Pages.Paginas.ConsultaClientes",
+        "AssemblyName": "ProyectoFinal",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ConsultaClientes"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "ProyectoFinal.Pages.Paginas.ConsultaClientes"
+        }
+      },
+      {
+        "HashCode": 1846726774,
+        "Kind": "Components.Component",
+        "Name": "ProyectoFinal.Pages.Paginas.ConsultaClientes",
+        "AssemblyName": "ProyectoFinal",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ProyectoFinal.Pages.Paginas.ConsultaClientes"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "ProyectoFinal.Pages.Paginas.ConsultaClientes",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
         "HashCode": -1847929393,
         "Kind": "Components.Component",
         "Name": "ProyectoFinal.Pages.Paginas.Home",
@@ -78,105 +144,6 @@
         }
       },
       {
-        "HashCode": -1061569123,
-        "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Paginas.RegistroDispositivo",
-        "AssemblyName": "ProyectoFinal",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "RegistroDispositivo"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Paginas.RegistroDispositivo"
-        }
-      },
-      {
-        "HashCode": -650499671,
-        "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Paginas.RegistroDispositivo",
-        "AssemblyName": "ProyectoFinal",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "ProyectoFinal.Pages.Paginas.RegistroDispositivo"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Paginas.RegistroDispositivo",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "HashCode": -964417998,
-        "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Paginas.ConsultaClientes",
-        "AssemblyName": "ProyectoFinal",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "ConsultaClientes"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Paginas.ConsultaClientes"
-        }
-      },
-      {
-        "HashCode": 1846726774,
-        "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Paginas.ConsultaClientes",
-        "AssemblyName": "ProyectoFinal",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "ProyectoFinal.Pages.Paginas.ConsultaClientes"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Paginas.ConsultaClientes",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "HashCode": 1322595466,
-        "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Paginas.ConsultaDispositivos",
-        "AssemblyName": "ProyectoFinal",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "ConsultaDispositivos"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Paginas.ConsultaDispositivos"
-        }
-      },
-      {
-        "HashCode": 896274399,
-        "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Pages.Paginas.ConsultaDispositivos",
-        "AssemblyName": "ProyectoFinal",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "ProyectoFinal.Pages.Paginas.ConsultaDispositivos"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Pages.Paginas.ConsultaDispositivos",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
         "HashCode": -312374570,
         "Kind": "Components.Component",
         "Name": "ProyectoFinal.Pages.Paginas.RegistroClientes",
@@ -210,35 +177,68 @@
         }
       },
       {
-        "HashCode": -1781849090,
+        "HashCode": -1061569123,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Shared.NavMenu",
+        "Name": "ProyectoFinal.Pages.Paginas.RegistroDispositivo",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "NavMenu"
+            "TagName": "RegistroDispositivo"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Shared.NavMenu"
+          "Common.TypeName": "ProyectoFinal.Pages.Paginas.RegistroDispositivo"
         }
       },
       {
-        "HashCode": -1792183817,
+        "HashCode": -650499671,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.Shared.NavMenu",
+        "Name": "ProyectoFinal.Pages.Paginas.RegistroDispositivo",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "ProyectoFinal.Shared.NavMenu"
+            "TagName": "ProyectoFinal.Pages.Paginas.RegistroDispositivo"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.Shared.NavMenu",
+          "Common.TypeName": "ProyectoFinal.Pages.Paginas.RegistroDispositivo",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": 1291578132,
+        "Kind": "Components.Component",
+        "Name": "ProyectoFinal.App",
+        "AssemblyName": "ProyectoFinal",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "App"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "ProyectoFinal.App"
+        }
+      },
+      {
+        "HashCode": -1670239028,
+        "Kind": "Components.Component",
+        "Name": "ProyectoFinal.App",
+        "AssemblyName": "ProyectoFinal",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ProyectoFinal.App"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "ProyectoFinal.App",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -339,35 +339,35 @@
         }
       },
       {
-        "HashCode": 1291578132,
+        "HashCode": -1781849090,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.App",
+        "Name": "ProyectoFinal.Shared.NavMenu",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "App"
+            "TagName": "NavMenu"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.App"
+          "Common.TypeName": "ProyectoFinal.Shared.NavMenu"
         }
       },
       {
-        "HashCode": -1670239028,
+        "HashCode": -1792183817,
         "Kind": "Components.Component",
-        "Name": "ProyectoFinal.App",
+        "Name": "ProyectoFinal.Shared.NavMenu",
         "AssemblyName": "ProyectoFinal",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "ProyectoFinal.App"
+            "TagName": "ProyectoFinal.Shared.NavMenu"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "ProyectoFinal.App",
+          "Common.TypeName": "ProyectoFinal.Shared.NavMenu",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
